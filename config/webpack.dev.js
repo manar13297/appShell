@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const path = require('path');
-
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = merge(common, {
     mode: 'development',
     output: {
@@ -23,6 +23,11 @@ module.exports = merge(common, {
     plugins: [
         new HtmlWebpackPlugin({
             template: './public/index.html'
+        }),
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: 'assets', to: 'assets' }
+            ]
         }),
         new ModuleFederationPlugin({
             name: 'container',
