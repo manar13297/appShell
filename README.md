@@ -105,3 +105,64 @@ const App = () => {
 export default App;
 
 ````
+
+# What to change in webpack.dev.js for microfrontends?
+the best suggested way to add config is:
+- create a .env file in config directory and paste this into it:
+````text
+const port = 8081; //set this
+const backendUrl = 'http://localhost:8090/' //orchestration service URL
+module.exports = {
+    backendUrl: backendUrl,
+    port: port,
+    publicPath: `http://localhost:${(port)}/`,
+    name: 'nameOfMicrofrontend', //set this
+    filename: 'remoteEntry.js',
+    exposes:{
+        './NameOfMicrofrontendApp': './src/index', //set this to your index.js (or any other entry file)
+    }
+};
+````
+**Respect please this convention: if your microfrontend name is "marketing" you should expose the index as "MarketingApp"**
+
+- change your `webpack.dev.js` to: 
+
+````text
+onst packageJson = require('../package.json');
+const env = require('./env');
+
+const {merge} = require('webpack-merge');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ModuleFederationPlugin =
+    require('webpack/lib/container/ModuleFederationPlugin');
+const commonConfig = require('./webpack.common.js');
+const devConfig = {
+    mode: 'development',
+    output: {
+        publicPath: env.publicPath,
+    },
+    devServer: {
+        port: env.port,
+        historyApiFallback: {
+            index: 'index.html',
+        },
+    },
+    plugins: [
+        new ModuleFederationPlugin({
+            name: env.name,
+            filename: env.filename,
+            exposes: env.exposes,
+            shared: packageJson.dependencies,
+        }),
+        new HtmlWebpackPlugin({
+            template: './public/index.html',
+        }),
+    ]
+
+
+};
+module.exports = merge(commonConfig, devConfig);
+
+````
+
+--> This will help you to focus just on necessary configurations, you'll need just to modify the env file.
