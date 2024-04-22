@@ -128,7 +128,7 @@ module.exports = {
 - change your `webpack.dev.js` to: 
 
 ````text
-onst packageJson = require('../package.json');
+const packageJson = require('../package.json');
 const env = require('./env');
 
 const {merge} = require('webpack-merge');
