@@ -1,12 +1,10 @@
-import React from "react";
+import React, {Fragment} from "react";
 import './App.css';
-
+import Footer from './components/Footer'
 const App = () => (
-    <div>
-        <h1 className="text-black font-thin text-3xl">
-            Hello world!
-        </h1>
-    </div>
+    <Fragment>
+        <Footer text = "&#169; 2024, Keiken Digital solutions"></Footer>
+    </Fragment>
 );
 
 export default App;

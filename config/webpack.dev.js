@@ -26,7 +26,6 @@ module.exports = merge(common, {
         }),
         new ModuleFederationPlugin({
             name: 'container',
-            shared: packageJson.dependencies,
         }),
     ]
 });
