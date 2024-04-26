@@ -11,9 +11,12 @@ module.exports = {
         'keiken-blue': '#2196F3',
         'keiken-purple': '#5F43F0',
         'border-blue': '#DAE8F5',
+        'primary-blue': '#57A3EA',
+        'secondary-blue': '#D6EBFE'
       },
       fontFamily: {
         'roboto': ['Roboto', 'sans-serif'],
+        'sans': ['Inter', 'sans-serif'],
       },
       fontSize: {
         'xs': ['10px', '11.72px'],
@@ -39,5 +42,6 @@ module.exports = {
     },
   },
   plugins: [],
+
 }
 

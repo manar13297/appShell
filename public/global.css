@@ -5,4 +5,12 @@ body {
     @apply bg-background;
 }
 
+.headerItem{
+    border-radius: 5px 5px 0px 0px;
+    cursor: pointer;
+}
+
+.non-displayed{
+    display: none;
+}
 @tailwind utilities;
