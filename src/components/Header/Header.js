@@ -1,28 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HeaderItem from "./HeaderItem";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Header = ({ onSignOut }) => {
     const [activeIndex, setActiveIndex] = useState(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    const handleClick = (index) => {
-        setActiveIndex(index);
+    // Handle activating header elements according to route
+    useEffect(() => {
+        const pathMap = {
+            "/dashboard": 0,
+            "/resume": 1,
+            "/analysis": 2,
+            "/interviews": 3,
+            "/professional-orientation": 4
+        };
+        const path = location.pathname.endsWith('/') ? location.pathname.slice(0, -1) : location.pathname;
+        setActiveIndex(pathMap[path]);
+    }, [location.pathname]);
+
+    const handleClick = (path) => {
+        navigate(path);
     };
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+
     const handleLogout = () => {
         onSignOut();
     };
+
     return (
-        <header className="absolute top-0 w-full flex bg-secondary-blue h-20">
+        <header className="w-full flex bg-secondary-blue h-70px">
             <div className="flex justify-center w-full items-end">
-                <HeaderItem text="Dashboard" isActive={activeIndex === 0} onClick={() => handleClick(0)} />
-                <HeaderItem text="Resume" isActive={activeIndex === 1} onClick={() => handleClick(1)} />
-                <HeaderItem text="Analysis" isActive={activeIndex === 2} onClick={() => handleClick(2)} />
-                <HeaderItem text="Interviews" isActive={activeIndex === 3} onClick={() => handleClick(3)} />
-                <HeaderItem text="Professional Orientation" isActive={activeIndex === 4} onClick={() => handleClick(4)} />
+                <HeaderItem text="Dashboard" isActive={activeIndex === 0} onClick={() => handleClick('/dashboard')} />
+                <HeaderItem text="Resume" isActive={activeIndex === 1} onClick={() => handleClick('/resume')} />
+                <HeaderItem text="Analysis" isActive={activeIndex === 2} onClick={() => handleClick('/analysis')} />
+                <HeaderItem text="Interviews" isActive={activeIndex === 3} onClick={() => handleClick('/interviews')} />
+                <HeaderItem text="Professional Orientation" isActive={activeIndex === 4} onClick={() => handleClick('/professional-orientation')} />
             </div>
             <div className="flex items-center mr-10">
                 <div className="rounded-full h-8 w-8 bg-gray-300 mr-2"></div>

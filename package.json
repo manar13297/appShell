@@ -13,7 +13,9 @@
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.24.3",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.23.0"
+
   },
   "devDependencies": {
     "@babel/core": "^7.24.4",
@@ -31,6 +33,7 @@
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.4",
-    "webpack-merge": "^5.10.0"
+    "webpack-merge": "^5.10.0",
+    "history": "^5.3.0"
   }
 }

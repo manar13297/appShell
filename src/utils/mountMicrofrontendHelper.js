@@ -1,26 +1,17 @@
 import {useEffect} from "react";
 import {loadMicrofrontend} from "./loadMicrofrontend";
-
-export const mountMicrofrontend = (name, ref, history, additionalConfig = {}) => {
+export const useMountMicrofrontend = (name, ref, props) => {
     useEffect(() => {
         loadMicrofrontend(name)
             .then(mountFn => {
+                console.log(typeof mountFn)
                 if (typeof mountFn === 'function') {
-                    const {onParentNavigate} = mountFn(ref.current, {
-                        initialPath: history.location.pathname,
-                        onNavigate: ({pathname: nextPathname}) => {
-                            const {pathname} = history.location;
-                            if (pathname !== nextPathname) {
-                                history.push(nextPathname);
-                            }
-                        },
-                        ...additionalConfig,
-                    });
-                    history.listen(onParentNavigate);
+                    console.log("mount MF")
+                   mountFn(ref.current , props)
                 }
             })
             .catch(error => {
                 console.error(`Failed to load or mount ${name} microfrontend`, error);
             });
-    }, [ref, history, additionalConfig]);
+    }, [name,ref,props]);
 };
